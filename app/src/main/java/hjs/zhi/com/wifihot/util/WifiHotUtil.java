@@ -8,7 +8,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * 打印日志信息WiFi热点工具
+ * 打印日志信息
+ * WiFi热点工具
  */
 public class WifiHotUtil {
 
@@ -41,7 +42,7 @@ public class WifiHotUtil {
      * @param mPasswd
      */
     private void stratWifiAp(String mSSID, String mPasswd) {
-        Method method ;
+        Method method;
         try {
             //通过反射机制打开热点
             method = mWifiManager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);
@@ -50,6 +51,7 @@ public class WifiHotUtil {
             netConfig.SSID = mSSID;
             netConfig.preSharedKey = mPasswd;
 
+            netConfig.hiddenSSID = true;
             netConfig.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
             netConfig.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
             netConfig.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
@@ -63,7 +65,6 @@ public class WifiHotUtil {
 
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            System.out.println(" ++++++++=  "+e.getMessage());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {

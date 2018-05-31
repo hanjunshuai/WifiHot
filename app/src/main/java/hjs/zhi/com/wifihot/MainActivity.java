@@ -1,5 +1,6 @@
 package hjs.zhi.com.wifihot;
 
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,13 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import hjs.zhi.com.wifihot.util.PermissionUtils;
 import hjs.zhi.com.wifihot.util.WifiHotUtil;
 
 public class MainActivity extends AppCompatActivity {
     private static String TAG = "StartActivity";
 
     private final String defaultHotName = "hjs";
-    private final String defaultHotPwd = "0175@..h";
+    private final String defaultHotPwd = "960302..";
 
     private boolean isWifiOpen = false;
     private WifiHotUtil wifiHotUtil;
@@ -24,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PermissionUtils.verifyStoragePermissions(this);
+        }
+
         //start WiFiAPService
         WiFiAPService.startService(this);
         //init WifiHotUtil
@@ -33,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
         btnWifiHot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TAG", "TAG");
                 if (!isWifiOpen) {
                     openWifiHot();
                 } else {
                     closeWifiHot();
+                    Toast.makeText(MainActivity.this, "关闭热点", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -19,6 +19,7 @@ public class WiFiAPService extends Service {
 
     /**
      * static method to start service
+     *
      * @param context
      */
     public static void startService(Context context) {
@@ -29,6 +30,7 @@ public class WiFiAPService extends Service {
 
     /**
      * static method to stop service
+     *
      * @param context
      */
     public static void stopService(Context context) {
@@ -41,7 +43,6 @@ public class WiFiAPService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-        Log.i(TAG, "intent.getAction()="+intent.getAction());
         // option based on action
         if (intent.getAction().equals(ACTION_START_SERVICE) == true) {
             //startService();
@@ -54,10 +55,9 @@ public class WiFiAPService extends Service {
 
     @Override
     public void onCreate() {
-        registerReceiver(wifiReceiver,new IntentFilter("android.net.wifi.WIFI_AP_STATE_CHANGED"));
+        registerReceiver(wifiReceiver, new IntentFilter("android.net.wifi.WIFI_AP_STATE_CHANGED"));
         super.onCreate();
     }
-
 
 
     @Override
@@ -69,6 +69,7 @@ public class WiFiAPService extends Service {
 
     /**
      * register wiFiAPListener
+     *
      * @param wiFiAPListener
      */
     public static void addWiFiAPListener(WiFiAPListener wiFiAPListener) {
@@ -77,6 +78,7 @@ public class WiFiAPService extends Service {
 
     /**
      * remove wiFiAPListener
+     *
      * @param wiFiAPListener
      */
     public static void removeWiFiAPListener(WiFiAPListener wiFiAPListener) {
@@ -84,13 +86,13 @@ public class WiFiAPService extends Service {
     }
 
 
-    private BroadcastReceiver wifiReceiver = new BroadcastReceiver(){
+    private BroadcastReceiver wifiReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if ("android.net.wifi.WIFI_AP_STATE_CHANGED".equals(action)) {
                 //便携式热点的状态为：10---正在关闭；11---已关闭；12---正在开启；13---已开启
-                int state = intent.getIntExtra("wifi_state",  0);
-                Log.i(TAG, "state= "+state);
+                int state = intent.getIntExtra("wifi_state", 0);
+                Log.i(TAG, "state= " + state);
                 wiFiAPObserver.stateChanged(state);
             }
         }
