@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">WifiHot</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="open_wifi_hot">打开WIFI热点</string>
+    <string name="opening_wifi_hot">正在打开热点...</string>
+    <string name="close_wifi_hot">关闭WIFI热点</string>
+    <string name="closeing_wifi_hot">正在关闭热点...</string>
+
 </resources>
